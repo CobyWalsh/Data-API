@@ -9,9 +9,12 @@
 <body>
     <canvas id="chart" width="400" height="400"></canvas>
     <script>
-        function chartIt() {
-        const ctx = document.getElementById('chart');
         const xLabels = [];
+        chartIt ();
+        async function chartIt() {
+            await getData();
+            const ctx = document.getElementById('chart');
+
 new Chart(ctx, {
   type: 'bar',
   data: {
