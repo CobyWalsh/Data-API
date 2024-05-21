@@ -9,30 +9,28 @@
 <body>
     <canvas id="chart" width="400" height="400"></canvas>
     <script>
+        function chartIt() {
         const ctx = document.getElementById('chart');
-
+        const xLabels = [];
 new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: xLabels,
     datasets: [{
       label: 'Global Average Temperature',
       data: [12, 19, 3, 5, 2, 3],
       borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
+     }]
+   },
+
+ });
+}
+
         // Data from: https://data.giss.nasa.gov/gistemp/
         // Mean from: https://earthobservatory.nasa.gov/world-of-
 
         getData();
+
         async function getData() {
             const response = await fetch('ZonAnn.Ts+dsst.csv');
             const data = await response.text();
@@ -41,6 +39,7 @@ new Chart(ctx, {
             table.forEach(row => {
                 const columns = row.split(',');
                 const year = columns[0];
+                xLabels.push(year);
                 const temp = columns[1];
                 console.log(year, temp);
             });
