@@ -9,33 +9,42 @@
 <body>
     <canvas id="chart" width="400" height="400"></canvas>
     <script>
-        const xLabels = [];
-        const yTemps = [];
         chartIt ();
         async function chartIt() {
-            await getData();
+            const data = await getData();
             const ctx = document.getElementById('chart');
 
 new Chart(ctx, {
   type: 'line',
   data: {
-    labels: xLabels,
+    labels: data.xs,
     datasets: [{
-      label: 'Global Average Temperature',
-      data: yTemps,
+      label: 'Combined Land-Surface Air and Sea-Surface Water Temperature in C°',
+      data: data.ys,
       borderWidth: 1
      }]
    },
-
+   options: {
+        scales: {
+            y: {
+                ticks: {
+                    callback: function(value, index, ticks) {
+                        return value + '°';
+                    }
+                }
+            }
+        }
+    }
  });
 }
 
         // Data from: https://data.giss.nasa.gov/gistemp/
         // Mean from: https://earthobservatory.nasa.gov/world-of-
 
-        getData();
+       async function getData() {
+       const xs = [];
+        const ys = [];
 
-        async function getData() {
             const response = await fetch('ZonAnn.Ts+dsst.csv');
             const data = await response.text();
 
@@ -43,15 +52,14 @@ new Chart(ctx, {
             table.forEach(row => {
                 const columns = row.split(',');
                 const year = columns[0];
-                xLabels.push(year);
+                xs.push(year);
                 const temp = columns[1];
-                yTemps.push(parseFloat(temp) + 14);
+                ys.push(parseFloat(temp) + 14);
                 console.log(year, temp);
             });
-          
+          return { xs, ys };
 
-        }
-
+    } 
     </script>
     
 </body>
