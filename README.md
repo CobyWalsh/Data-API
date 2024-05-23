@@ -1,3 +1,3 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)]
-![Graph](<Image/Land&Surface Water Temp Graph.jpg>)
+![Graph](<Image/Combined Land-Surface Air and Sea-Surface Water Temperature .jpg>)
 # Data-API
